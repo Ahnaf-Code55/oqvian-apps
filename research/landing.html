@@ -266,7 +266,7 @@
   } catch (e) {}
 
   // ---- Apply copy ---------------------------------------------------------
-  document.getElementById("variantBadge").textContent = "variant " + variantKey.toUpperCase() + " · " + v.name;
+  document.getElementById("variantBadge").style.display = "none";
   document.getElementById("eyebrow").textContent = v.eyebrow;
   document.getElementById("headline").innerHTML = v.headline;
   document.getElementById("subline").textContent = v.subline;
