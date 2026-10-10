@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/oqvian-apps/receipt/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>RECEIPT — see the true, all-in cost</title>
+  <meta name="description" content="Paste any quoted price — a flight, a hotel, rent, a phone plan — and RECEIPT adds up the hidden fees behind it.">
+  <meta name="theme-color" content="#0A0B0F">
+  <meta name="color-scheme" content="dark">
+
+  <meta property="og:title" content="RECEIPT — see the true, all-in cost">
+  <meta property="og:description" content="The price they quote. The whole bill.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icons/Icon-512.png">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="RECEIPT">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #0A0B0F;
+      color: #F0F1E9;
+      overscroll-behavior: none;
+    }
+    #receipt-splash {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(900px 600px at 110% 0%, rgba(255,106,61,.12), transparent 60%),
+        #0A0B0F;
+      transition: opacity .4s ease;
+      z-index: 10;
+    }
+    #receipt-splash .box { display: grid; place-items: center; gap: 18px; }
+    #receipt-splash .mark {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: linear-gradient(160deg, #FF8A5C, #FF6A3D);
+      display: grid; place-items: center;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    #receipt-splash .wordmark {
+      font-family: "Space Grotesk", Inter, system-ui, sans-serif;
+      font-weight: 700; letter-spacing: .3em; font-size: 15px; color: #F0F1E9;
+      padding-left: .3em;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(.92); opacity: .78; }
+    }
+    @media (prefers-reduced-motion: reduce) { #receipt-splash .mark { animation: none; } }
+  </style>
+</head>
+<body style="margin:0;background:#0A0B0F;color:#F0F1E9">
+  <div id="receipt-splash" aria-hidden="true">
+    <div class="box">
+      <div class="mark">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0A0B0F"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 3h12v15l-2-1.4L14 18l-2-1.4L10 18l-2-1.4L6 18z"/>
+          <path d="M9 8h6M9 11h6"/>
+        </svg>
+      </div>
+      <div class="wordmark">RECEIPT</div>
+    </div>
+  </div>
+
+  <script src="flutter_bootstrap.js" async></script>
+
+  <script>
+    (function () {
+      var splash = document.getElementById('receipt-splash');
+      if (!splash) return;
+      function dismiss() {
+        splash.style.opacity = '0';
+        setTimeout(function () { splash.remove(); }, 420);
+      }
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries++;
+        if (document.querySelector('flutter-view, flt-glass-pane, flt-scene-host, canvas')) {
+          clearInterval(timer); dismiss();
+        } else if (tries > 60) {
+          clearInterval(timer); dismiss();
+        }
+      }, 120);
+    })();
+  </script>
+</body>
+</html>
